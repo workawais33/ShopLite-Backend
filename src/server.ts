@@ -1,3 +1,4 @@
+
 import "dotenv/config";
 import cors from "cors";
 import express from "express";
@@ -47,6 +48,13 @@ app.use(
   })
 );
 
+app.get("/", (_req, res) => {
+  res.json({
+    success: true,
+    message: "ShopLite Backend is running",
+  });
+});
+
 app.get("/api/health", (_req, res) => {
   res.json({
     success: true,
@@ -83,6 +91,10 @@ app.use(
   }
 );
 
-app.listen(port, () => {
-  console.log(`ShopLite API running on http://localhost:${port}`);
-});
+if (process.env.NODE_ENV !== "production") {
+  app.listen(port, () => {
+    console.log(`ShopLite API running on http://localhost:${port}`);
+  });
+}
+
+export default app;
